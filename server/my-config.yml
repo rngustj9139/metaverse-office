@@ -1,0 +1,12 @@
+console: 
+  port: 7351
+  username: "admin"
+  password: "12345678"
+
+logger: 
+  stdout: false
+  level: "warn"
+  file: "/nakama/data/logfile.log"
+
+session:
+  token_expiry_sec: 7000

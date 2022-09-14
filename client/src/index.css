@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button.with-icon {
+  display: flex;
+}
+
+.w300 {
+  width: 300px;
+}
+
+.message-nickname {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.send-btn {
+  height: 38px;
+  margin-left: 6px;
+}
+
+.card {
+  padding: 14px;
+}
+
+.text-box {
+  padding: 6px;
+}
+
+.time {
+  margin-left: 4px;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 2;
+}
+
+.chat-window {
+  height: 400px;
+  overflow-y: auto;
+}

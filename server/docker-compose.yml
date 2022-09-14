@@ -1,0 +1,52 @@
+#docker가 실행된 상태에서 터미널을열고 이 디렉토리 경로에서 docker-compose up을 친다음 localhost:7351들어가기
+
+version: '3'
+services:
+  postgres: # postgres DB 다운로드
+    container_name: postgres
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_DB=nakama
+      - POSTGRES_PASSWORD=localdb
+    volumes:
+      - data:/var/lib/postgresql/data
+    expose:
+      - "8080"
+      - "5432"
+    ports:
+      - "5432:5432"
+      - "8080:8080"
+  nakama: # nakama server 다운로드 (나카마 서버는 게임과 관련된 기능을 이미 구현해놓은 서버이다.) (서버는 localhost:7350 관리자툴은 7351 데이터베이스는 5432이고 관리자툴 기본 아이디 비번은 admin password이다.)
+    container_name: nakama
+    image: registry.heroiclabs.com/heroiclabs/nakama:3.12.0
+    entrypoint:
+      - "/bin/sh"
+      - "-ecx"
+      - >
+        /nakama/nakama migrate up 
+        --database.address postgres:localdb@postgres:5432/nakama 
+        && exec /nakama/nakama --name nakama1 
+        --database.address postgres:localdb@postgres:5432/nakama 
+        --config /nakama/data/my-config.yml     
+    restart: always
+    links:
+      - "postgres:db"
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/nakama/data
+    expose:
+      - "7349"
+      - "7350"
+      - "7351"
+    ports:
+      - "7349:7349"
+      - "7350:7350"
+      - "7351:7351"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:7350/" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  data:
